@@ -17,7 +17,7 @@ if (BUILD_DOCS)
 endif (BUILD_DOCS)
 
 option(WITH_BINLOG "Build binlog dump options" OFF)
-option(WITH_SSL "Build SSL support" ON)
+option(WITH_SSL "Build SSL support" OFF)
 
 set(CMAKE_C_FLAGS "-Wall -Wno-deprecated-declarations -Wunused -Wwrite-strings -Wno-strict-aliasing -Wextra -Wshadow -Werror -O3 -g ${MYSQL_CFLAGS}")
 
