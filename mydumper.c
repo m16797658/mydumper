@@ -2075,7 +2075,7 @@ gboolean detect_generated_fields(MYSQL *conn, char *database, char *table) {
 
   gchar *query = g_strdup_printf(
       "select COLUMN_NAME from information_schema.COLUMNS where "
-      "TABLE_SCHEMA='%s' and TABLE_NAME='%s' and extra like '%%GENERATED%%'",
+      "TABLE_SCHEMA='%s' and TABLE_NAME='%s' and extra like '%% GENERATED%%'",
       database, table);
   mysql_query(conn, query);
   g_free(query);
@@ -2098,7 +2098,7 @@ GString *get_insertable_fields(MYSQL *conn, char *database, char *table) {
   gchar *query =
       g_strdup_printf("select COLUMN_NAME from information_schema.COLUMNS "
                       "where TABLE_SCHEMA='%s' and TABLE_NAME='%s' and extra "
-                      "not like '%%GENERATED%%'",
+                      "not like '%% GENERATED%%'",
                       database, table);
   mysql_query(conn, query);
   g_free(query);
@@ -3003,7 +3003,7 @@ void dump_schema_data(MYSQL *conn, char *database, char *table,
   GString *statement = g_string_sized_new(statement_size);
 
   if (detected_server == SERVER_TYPE_MYSQL) {
-    g_string_printf(statement, "/*!40101 SET NAMES binary*/;\n");
+    g_string_printf(statement, "/*!40101 SET NAMES utf8mb4 */;\n");
     g_string_append(statement, "/*!40014 SET FOREIGN_KEY_CHECKS=0*/;\n\n");
     if (!skip_tz) {
       g_string_append(statement, "/*!40103 SET TIME_ZONE='+00:00' */;\n");
@@ -3086,7 +3086,7 @@ void dump_view_data(MYSQL *conn, char *database, char *table, char *filename,
   }
 
   if (detected_server == SERVER_TYPE_MYSQL) {
-    g_string_printf(statement, "/*!40101 SET NAMES binary*/;\n");
+    g_string_printf(statement, "/*!40101 SET NAMES utf8mb4 */;\n");
   }
 
   if (!write_data((FILE *)outfile, statement)) {
@@ -3495,7 +3495,7 @@ guint64 dump_table_data(MYSQL *conn, FILE *file, char *database, char *table,
     if (!statement->len) {
       if (!st_in_file) {
         if (detected_server == SERVER_TYPE_MYSQL) {
-          g_string_printf(statement, "/*!40101 SET NAMES binary*/;\n");
+          g_string_printf(statement, "/*!40101 SET NAMES utf8mb4 */;\n");
           g_string_append(statement, "/*!40014 SET FOREIGN_KEY_CHECKS=0*/;\n");
           if (!skip_tz) {
             g_string_append(statement, "/*!40103 SET TIME_ZONE='+00:00' */;\n");
